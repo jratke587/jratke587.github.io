@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>John Ratke – Project Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfbfa;
+    --ink: #1c1f23;
+    --muted: #666c75;
+    --line: #e2e3e0;
+    --accent: #2447b8;
+    --placeholder: #ececea;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181b;
+      --ink: #e9eaec;
+      --muted: #9aa0a8;
+      --line: #2b2e33;
+      --accent: #8fa8ff;
+      --placeholder: #202328;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+    gap: 64px;
+  }
+
+  /* Left column */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    padding: 64px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .name {
+    font-weight: 600; font-size: 1.75rem; line-height: 1.2; font-family: inherit;
+    margin: 0;
+  }
+  .sidebar ul { list-style: none; margin: 0; padding: 0; }
+  .social li + li { margin-top: 4px; }
+  .index { border-top: 1px solid var(--line); padding-top: 24px; }
+  .index li + li { margin-top: 8px; }
+  .index a { color: var(--muted); text-decoration: none; }
+  .index a:hover { color: var(--ink); text-decoration: underline; }
+
+  /* Right column */
+  main { padding: 64px 0 120px; }
+  main > h1 {
+    font-weight: 600; font-size: 2.25rem; line-height: 1.2; font-family: inherit;
+    margin: 0 0 56px;
+  }
+
+  .project { scroll-margin-top: 64px; max-width: 640px; }
+  .project + .project {
+    margin-top: 72px;
+    padding-top: 56px;
+    border-top: 1px solid var(--line);
+  }
+  .project h2 {
+    font-weight: 600; font-size: 1.4rem; line-height: 1.3; font-family: inherit;
+    margin: 0 0 16px;
+  }
+  .project p { margin: 0 0 16px; }
+  .project ul { margin: 0 0 20px; padding-left: 20px; }
+  .project li + li { margin-top: 4px; }
+
+  .pictures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 0 24px;
+  }
+  .pictures img,
+  .pictures .placeholder {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: var(--placeholder);
+    border-radius: 2px;
+  }
+  .placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  /* Small screens: stack, un-stick the sidebar */
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; gap: 0; padding: 0 20px; }
+    .sidebar { position: static; height: auto; padding: 40px 0 32px; }
+    main { padding-top: 32px; }
+    .pictures { grid-template-columns: 1fr; }
+    .project { scroll-margin-top: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- LEFT: name, links, project index -->
+  <aside class="sidebar">
+    <h1 class="name">John Ratke</h1>
+
+    <ul class="social">
+      <li><a href="https://www.linkedin.com/in/ratke">LinkedIn</a></li>
+      <li><a href="https://github.com/jratke587">GitHub</a></li>
+    </ul>
+
+    <nav class="index" aria-label="Projects">
+      <ul>
+        <li><a href="#project-one">Project One</a></li>
+        <li><a href="#project-two">Project Two</a></li>
+        <li><a href="#project-three">Project Three</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- RIGHT: projects -->
+  <main>
+    <h1>Projects</h1>
+
+    <article class="project" id="project-one">
+      <h2>Project One</h2>
+      <!-- Swap each .placeholder for: <img src="images/one-a.jpg" alt="Describe the image"> -->
+      <div class="pictures">
+        <div class="placeholder">Picture</div>
+        <div class="placeholder">Picture</div>
+      </div>
+      <p>A sentence or two on what this project is and the problem it solves.</p>
+      <ul>
+        <li>What you built and the tools you used</li>
+        <li>A decision or challenge worth mentioning</li>
+        <li>The result, or what you learned</li>
+      </ul>
+      <a href="https://github.com/your-handle/project-one">View on GitHub</a>
+    </article>
+
+    <article class="project" id="project-two">
+      <h2>Project Two</h2>
+      <div class="pictures">
+        <div class="placeholder">Picture</div>
+        <div class="placeholder">Picture</div>
+      </div>
+      <p>A sentence or two on what this project is and the problem it solves.</p>
+      <ul>
+        <li>What you built and the tools you used</li>
+        <li>A decision or challenge worth mentioning</li>
+        <li>The result, or what you learned</li>
+      </ul>
+      <a href="https://github.com/your-handle/project-two">View on GitHub</a>
+    </article>
+
+    <article class="project" id="project-three">
+      <h2>Project Three</h2>
+      <div class="pictures">
+        <div class="placeholder">Picture</div>
+        <div class="placeholder">Picture</div>
+      </div>
+      <p>A sentence or two on what this project is and the problem it solves.</p>
+      <ul>
+        <li>What you built and the tools you used</li>
+        <li>A decision or challenge worth mentioning</li>
+        <li>The result, or what you learned</li>
+      </ul>
+      <a href="https://github.com/your-handle/project-three">View on GitHub</a>
+    </article>
+  </main>
+
+</div>
+</body>
+</html>
