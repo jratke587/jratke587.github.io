@@ -140,9 +140,10 @@
 
     <nav class="index" aria-label="Projects">
       <ul>
-        <li><a href="#project-one">Project One</a></li>
-        <li><a href="#project-two">Project Two</a></li>
-        <li><a href="#project-three">Project Three</a></li>
+        <li><a href="#project-mdbv5">STM32 Robot Controller</a></li>
+        <li><a href="#project-cantof">CAN Time-of-Flight Node</a></li>
+        <li><a href="#project-dopled">Data-Over-Power LEDs</a></li>
+        <li><a href="#project-christmastree">3D-Mapped Christmas Tree</a></li>
       </ul>
     </nav>
   </aside>
@@ -151,50 +152,65 @@
   <main>
     <h1>Projects</h1>
 
-    <article class="project" id="project-one">
-      <h2>Project One</h2>
-      <!-- Swap each .placeholder for: <img src="images/one-a.jpg" alt="Describe the image"> -->
+    <article class="project" id="project-mdbv5">
+      <h2>STM32 Robot Controller (2026)</h2>
       <div class="pictures">
-        <div class="placeholder">Picture</div>
-        <div class="placeholder">Picture</div>
+        <img src="media/mdbv5_render2.png" alt="3D render of the PCB"/>
+        <img src="media/mdbv5_assembled.jpg" alt="Assembled version of the PCB"/>
       </div>
-      <p>A sentence or two on what this project is and the problem it solves.</p>
+      <p>A motor controller I designed and built for UT Dallas IEEE Robotics' 2026 competition robot. It runs closed-loop velocity control for the four mecanum wheels and handles drivetrain kinematics on-board, so the main computer only sends velocity commands. As team lead, I designed the hardware and firmware myself, learning PCB design along the way.</p>
       <ul>
-        <li>What you built and the tools you used</li>
-        <li>A decision or challenge worth mentioning</li>
-        <li>The result, or what you learned</li>
+        <li>Runs a 1 kHz PID velocity loop under FreeRTOS, with communication in a separate 100Hz task</li>
+        <li>Appears as a native ROS 2 node over USB-C using micro-ROS on a virtual COM port, with no host-side driver or bridge code</li>
+        <li>Publishes a pose estimate from mecanum forward kinematics and an SPI IMU, plus real-time voltage and current telemetry</li>
+        <li>Six TI DRV8874 H-bridges (6A peak each) drive the four drivetrain motors and two accessory motors with current limits</li>
       </ul>
-      <a href="https://github.com/your-handle/project-one">View on GitHub</a>
+      <a href="https://github.com/IEEE-Robotics-UT-Dallas/MotorDriverBoardv5">View on GitHub</a>
     </article>
 
-    <article class="project" id="project-two">
-      <h2>Project Two</h2>
+    <article class="project" id="project-cantof">
+      <h2>CAN Time-of-Flight Node (2026)</h2>
       <div class="pictures">
-        <div class="placeholder">Picture</div>
-        <div class="placeholder">Picture</div>
+        <img src="media/cantof_render.png" alt="3D render of the CAN TOF Node">
+        <img src="media/cantof_array.jpg" alt="5 assembled CAN TOF Nodes connected via CAN">
       </div>
-      <p>A sentence or two on what this project is and the problem it solves.</p>
+      <p>Our 2026 robot used time-of-flight sensors to measure distance to the field walls, but five sensors on one I²C bus failed because each module's onboard pull-up resistors combined in parallel, dropping the bus resistance too low for the devices to drive. I designed a compact CAN node that moves each sensor onto a robust, scalable bus instead.</p>
       <ul>
-        <li>What you built and the tools you used</li>
-        <li>A decision or challenge worth mentioning</li>
-        <li>The result, or what you learned</li>
+        <li>Built around ST's VL53L8CX 64-zone ToF sensor, connected to the microcontroller over SPI</li>
+        <li>Level shifters bridge the sensor's 1.8V I/O to the 3.3V STM32 microcontroller</li>
+        <li>Dual CAN FD + power connectors let nodes daisy-chain on a single cable at up to 8 Mbps</li>
+        <li>DMA transfers and interrupt-driven firmware keep up with the sensor's maximum 60 Hz update rate</li>
       </ul>
-      <a href="https://github.com/your-handle/project-two">View on GitHub</a>
+      <a href="https://github.com/IEEE-Robotics-UT-Dallas/CANdepth">View on GitHub</a>
     </article>
 
-    <article class="project" id="project-three">
-      <h2>Project Three</h2>
+    <article class="project" id="project-dopled">
+      <h2>DOPLED (2026)</h2>
       <div class="pictures">
-        <div class="placeholder">Picture</div>
-        <div class="placeholder">Picture</div>
+        <img src="media/dopled_led.png" alt="Photo of one Data-Over-Power LED"/>
+        <img src="media/dopled_data.jpg" alt="Photo of oscilloscope data from LEDs"/>
       </div>
-      <p>A sentence or two on what this project is and the problem it solves.</p>
+      <p>An ESP32 library for controlling low-cost Data-Over-Power LEDs, which receive both power and commands over the same two wires. With no separate data line, wiring is simpler, and the LEDs can be wired in series strings at higher voltage, which means lower current and thinner wire. The protocol was undocumented, so I reverse engineered it.</p>
       <ul>
-        <li>What you built and the tools you used</li>
-        <li>A decision or challenge worth mentioning</li>
-        <li>The result, or what you learned</li>
+        <li>Decoded the protocol (8-bit address, 24-bit color) from oscilloscope captures and a custom logic analyzer</li>
+        <li>Generates the non-standard pulse timing with the ESP32's RMT peripheral, keeping it off the CPU</li>
+        <li>Non-blocking API provides simple commands to addresse LEDs individually and in groups</li>
       </ul>
-      <a href="https://github.com/your-handle/project-three">View on GitHub</a>
+      <a href="https://github.com/jratke587/DOPLED">View on GitHub</a>
+    </article>
+
+      <article class="project" id="project-christmastree">
+      <h2>3D-Mapped Christmas Tree (2023)</h2>
+      <div class="pictures">
+        <img src="media/christmastree_planes.gif" alt="GIF showing 3d planes effect on christmas tree."/>
+        <img src="media/christmastree_led.png" alt="OpenCV detection of one LED location"/>
+      </div>
+      <p>A Christmas tree with 400 addressable LEDs that knows where every LED sits in 3D space. A Raspberry Pi and a webcam map the tree automatically, so animations can move through the tree's actual shape instead of just along the LED strip.</p>
+      <ul>
+        <li>Located each LED with OpenCV by lighting them one at a time and detecting the bright spot in the camera frame</li>
+        <li>Scanned the tree from four sides and merged the views into one 3D coordinate map, stored as a CSV</li>
+        <li>Python effects read the coordinates to render spatial animations, like the sweeping planes shown above</li>
+      </ul>
     </article>
   </main>
 
